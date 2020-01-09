@@ -18,51 +18,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     
+    @IBOutlet weak var consImageTopMargin: NSLayoutConstraint!
     @IBOutlet weak var consHiddenNaviBar: NSLayoutConstraint!
     @IBOutlet weak var consDayTopMargin: NSLayoutConstraint!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    //    115/
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let currentHiddenNaviH: CGFloat = consHiddenNaviBar.constant
-        let currentDayTopH: CGFloat = consDayTopMargin.constant
-        let offset = scrollView.contentOffset;
-        
-        
-        if(currentDayTopH > 0){
-            consHiddenNaviBar.constant = -20
-            consDayTopMargin.constant = 0
-            barStyle = .lightContent
-        }
-        else {
-            if consHiddenNaviBar.constant < 95 {
-                if(-currentHiddenNaviH - offset.y > 95) {
-                    consHiddenNaviBar.constant = 95
-                    consDayTopMargin.constant = -115
-                }
-                else {
-                    consHiddenNaviBar.constant = -currentHiddenNaviH - offset.y
-                    consDayTopMargin.constant = currentDayTopH - offset.y
-                }
-                print(currentDayTopH - offset.y)
-                scrollView.contentOffset = CGPoint.zero
-                barStyle = .lightContent
-            }
-            else if offset.y < 0 {
-                consHiddenNaviBar.constant = -currentHiddenNaviH - offset.y
-                consDayTopMargin.constant = currentDayTopH - offset.y
-                barStyle = .darkContent
-            }
-            else if offset.y > 0 {
-                consHiddenNaviBar.constant = 95
-                barStyle = .darkContent
-            }
-        }
-    }
     
     private var barStyle: UIStatusBarStyle = .lightContent {
         willSet {
@@ -77,12 +36,89 @@ class ViewController: UIViewController {
     }
     
     
-    func closeHeaderImageView() {
-        
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
     
-    func openHeaderImageView() {
+    //    115/
+    var test = 1
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentHiddenNaviH: CGFloat = consHiddenNaviBar.constant
+        let currentDayTopH: CGFloat = consDayTopMargin.constant
+
+    
+        let offset = scrollView.contentOffset;
         
+        if(currentDayTopH > 0){
+            consHiddenNaviBar.constant = -20
+            consDayTopMargin.constant = 0
+            barStyle = .lightContent
+        }
+        else {
+            if consHiddenNaviBar.constant < 95 {
+//                if(-currentHiddenNaviH - offset.y > 95) {
+//                    consHiddenNaviBar.constant = 95
+//                    consDayTopMargin.constant = -115
+//                }
+//                else {
+                    consHiddenNaviBar.constant = -currentHiddenNaviH - offset.y
+                    consDayTopMargin.constant = currentDayTopH - offset.y
+                    print("dDDDD")
+//                }
+                scrollView.contentOffset = CGPoint.zero
+                barStyle = .lightContent
+                
+            }
+            else if offset.y < 0 {
+                consHiddenNaviBar.constant = -currentHiddenNaviH - offset.y
+                consDayTopMargin.constant = currentDayTopH - offset.y
+                barStyle = .darkContent
+            }
+            else if offset.y > 0 {
+                consHiddenNaviBar.constant = 95
+                barStyle = .darkContent
+            }
+        }
+        consImageTopMargin.constant = consDayTopMargin.constant / 2
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
+        if velocity < 0 {
+            closeHeaderView(scrollView: scrollView)
+        }
+        else {
+            openHeaderView(scrollView: scrollView)
+        }
+        
+//        else if consHiddenNaviBar.constant < 0 && velocity == 0 {
+//            openHeaderView(scrollView: scrollView)
+//        }
+//        else if consHiddenNaviBar.constant >= 0 && velocity == 0 {
+//            closeHeaderView(scrollView: scrollView)
+//        }
+    }
+
+    func closeHeaderView(scrollView: UIScrollView) {
+        UIView.animate(withDuration: 0.2) {
+            self.consHiddenNaviBar.constant = 95
+            self.consDayTopMargin.constant = -115
+            self.consImageTopMargin.constant = self.consDayTopMargin.constant / 2
+            self.barStyle = .lightContent
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func openHeaderView(scrollView: UIScrollView) {
+        UIView.animate(withDuration: 0.2) {
+            self.consHiddenNaviBar.constant = -20
+            self.consDayTopMargin.constant = 0
+            self.consImageTopMargin.constant = self.consDayTopMargin.constant / 2
+            self.barStyle = .darkContent
+            self.view.layoutIfNeeded()
+        }
     }
 }
 

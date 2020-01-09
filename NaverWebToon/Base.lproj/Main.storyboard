@@ -33,12 +33,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="t1" translatesAutoresizingMaskIntoConstraints="NO" id="zp3-0e-dwf">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyB-Wh-nBO">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="210"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="t1" translatesAutoresizingMaskIntoConstraints="NO" id="zp3-0e-dwf">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="210"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="210" id="gTT-ux-uzx"/>
+                                    <constraint firstItem="zp3-0e-dwf" firstAttribute="leading" secondItem="dyB-Wh-nBO" secondAttribute="leading" id="47J-Kk-JRB"/>
+                                    <constraint firstAttribute="height" constant="210" id="Lie-0h-oTa"/>
+                                    <constraint firstItem="zp3-0e-dwf" firstAttribute="top" secondItem="dyB-Wh-nBO" secondAttribute="top" id="UtK-Ym-Uue"/>
+                                    <constraint firstItem="zp3-0e-dwf" firstAttribute="height" secondItem="dyB-Wh-nBO" secondAttribute="height" id="WXs-Xb-ZlE"/>
+                                    <constraint firstAttribute="trailing" secondItem="zp3-0e-dwf" secondAttribute="trailing" id="onI-Ji-UaA"/>
                                 </constraints>
-                            </imageView>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Phz-lu-yop">
                                 <rect key="frame" x="0.0" y="-170" width="414" height="150"/>
                                 <subviews>
@@ -178,17 +188,17 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="FJs-z7-Fz2" firstAttribute="top" secondItem="zp3-0e-dwf" secondAttribute="bottom" id="05l-Aa-P3D"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="z0a-iZ-hLy" secondAttribute="trailing" id="2dO-qg-x62"/>
-                            <constraint firstItem="zp3-0e-dwf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="3H7-an-AXN"/>
+                            <constraint firstItem="dyB-Wh-nBO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7qU-0J-Lmb"/>
                             <constraint firstItem="z0a-iZ-hLy" firstAttribute="top" secondItem="FJs-z7-Fz2" secondAttribute="bottom" id="8bH-rO-O6G"/>
                             <constraint firstItem="Phz-lu-yop" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-20" id="CGS-SC-fnC"/>
-                            <constraint firstItem="zp3-0e-dwf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="JJJ-Zd-zk3"/>
+                            <constraint firstItem="FJs-z7-Fz2" firstAttribute="top" secondItem="dyB-Wh-nBO" secondAttribute="bottom" id="NFM-E5-0Vh"/>
                             <constraint firstItem="z0a-iZ-hLy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="NpB-ZO-I1V"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FJs-z7-Fz2" secondAttribute="trailing" id="TXn-88-ujc"/>
                             <constraint firstItem="Phz-lu-yop" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Tkl-Nh-bJ0"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="z0a-iZ-hLy" secondAttribute="bottom" id="enE-aQ-Zae"/>
-                            <constraint firstItem="zp3-0e-dwf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="t7l-aD-ih7"/>
+                            <constraint firstItem="dyB-Wh-nBO" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="mFR-9F-5Uv"/>
+                            <constraint firstItem="dyB-Wh-nBO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="os6-dk-VAF"/>
                             <constraint firstItem="FJs-z7-Fz2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tfW-ma-4Am"/>
                             <constraint firstAttribute="trailing" secondItem="Phz-lu-yop" secondAttribute="trailing" id="vKE-sG-EPv"/>
                         </constraints>
@@ -197,8 +207,9 @@
                     <navigationItem key="navigationItem" id="QQ3-Bs-kg6"/>
                     <connections>
                         <outlet property="collectionView" destination="z0a-iZ-hLy" id="z8a-Yd-HiI"/>
-                        <outlet property="consDayTopMargin" destination="05l-Aa-P3D" id="BdG-Tc-iVC"/>
+                        <outlet property="consDayTopMargin" destination="NFM-E5-0Vh" id="GIx-nk-r30"/>
                         <outlet property="consHiddenNaviBar" destination="CGS-SC-fnC" id="KEE-lw-YP6"/>
+                        <outlet property="consImageTopMargin" destination="UtK-Ym-Uue" id="WqL-gj-dlp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
