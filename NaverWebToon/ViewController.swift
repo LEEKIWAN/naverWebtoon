@@ -28,34 +28,39 @@ class ViewController: UIViewController {
     //    115/
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let currentDayTopH: CGFloat = consDayTopMargin.constant
         let currentHiddenNaviH: CGFloat = consHiddenNaviBar.constant
+        let currentDayTopH: CGFloat = consDayTopMargin.constant
         let offset = scrollView.contentOffset;
         
         
-        if (currentDayTopH < -115) {
-            consHiddenNaviBar.constant = 95
-            consDayTopMargin.constant = -115
-            barStyle = .darkContent
-        }
-        else if(currentDayTopH > 0){
+        if(currentDayTopH > 0){
             consHiddenNaviBar.constant = -20
             consDayTopMargin.constant = 0
-            openHeaderImageView()
+            barStyle = .lightContent
         }
         else {
-            if consDayTopMargin.constant != -115 {
-                consHiddenNaviBar.constant = -currentHiddenNaviH - offset.y
-                consDayTopMargin.constant = currentDayTopH - offset.y
+            if consHiddenNaviBar.constant < 95 {
+                if(-currentHiddenNaviH - offset.y > 95) {
+                    consHiddenNaviBar.constant = 95
+                    consDayTopMargin.constant = -115
+                }
+                else {
+                    consHiddenNaviBar.constant = -currentHiddenNaviH - offset.y
+                    consDayTopMargin.constant = currentDayTopH - offset.y
+                }
+                print(currentDayTopH - offset.y)
                 scrollView.contentOffset = CGPoint.zero
-                openHeaderImageView()
+                barStyle = .lightContent
             }
             else if offset.y < 0 {
-                consDayTopMargin.constant = currentDayTopH - offset.y
                 consHiddenNaviBar.constant = -currentHiddenNaviH - offset.y
+                consDayTopMargin.constant = currentDayTopH - offset.y
                 barStyle = .darkContent
             }
-            
+            else if offset.y > 0 {
+                consHiddenNaviBar.constant = 95
+                barStyle = .darkContent
+            }
         }
     }
     
