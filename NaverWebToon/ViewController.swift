@@ -77,7 +77,7 @@ class ViewController: UIViewController {
                 consHiddenNaviBar.constant = 95
                 barStyle = .darkContent
             }
-        }
+        } 
         consImageTopMargin.constant = consDayTopMargin.constant / 2
     }
     
