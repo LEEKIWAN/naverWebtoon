@@ -25,9 +25,11 @@ class ViewController: UIViewController {
     
     private var barStyle: UIStatusBarStyle = .lightContent {
         willSet {
-            UIView.animate(withDuration: 0.2) {
-                self.setNeedsStatusBarAppearanceUpdate()
-            }
+//            if barStyle != newValue {
+                UIView.animate(withDuration: 0.2) {
+                    self.setNeedsStatusBarAppearanceUpdate()
+                }
+//            }
         }
     }
     
@@ -71,7 +73,7 @@ class ViewController: UIViewController {
                     consDayTopMargin.constant = currentDayTopH - offset.y
                 }
                 scrollView.contentOffset = CGPoint.zero
-                barStyle = .lightContent
+                barStyle = .darkContent
                 
             }
             else if offset.y < 0 {
@@ -89,12 +91,13 @@ class ViewController: UIViewController {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
-        if velocity < 0 {
+        print("velocity: \(velocity)", "consDayTopMargin.constant \(consDayTopMargin.constant)")
+        if velocity < 0 && consDayTopMargin.constant > -115 {
             closeHeaderView(scrollView: scrollView)
         }
-//        else {
-//            openHeaderView(scrollView: scrollView)
-//        }
+        else if velocity > 0 && consDayTopMargin.constant < 0 && consDayTopMargin.constant > -115 {
+            openHeaderView(scrollView: scrollView)
+        }
         else if consHiddenNaviBar.constant < 0 && velocity == 0 {
             openHeaderView(scrollView: scrollView)
         }
@@ -112,7 +115,6 @@ class ViewController: UIViewController {
             self.consHiddenNaviBar.constant = 95
             self.consDayTopMargin.constant = -115
             self.consImageTopMargin.constant = self.consDayTopMargin.constant / 2
-            self.barStyle = .lightContent
             self.view.layoutIfNeeded()
         }) { (completion) in
             self.topAnimationFlag = false
@@ -127,7 +129,6 @@ class ViewController: UIViewController {
             self.consHiddenNaviBar.constant = -20
             self.consDayTopMargin.constant = 0
             self.consImageTopMargin.constant = self.consDayTopMargin.constant / 2
-            self.barStyle = .darkContent
             self.view.layoutIfNeeded()
         }) { (completion) in
             self.topAnimationFlag = false
