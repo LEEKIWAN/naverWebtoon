@@ -25,11 +25,9 @@ class ViewController: UIViewController {
     
     private var barStyle: UIStatusBarStyle = .lightContent {
         willSet {
-//            if barStyle != newValue {
-                UIView.animate(withDuration: 0.2) {
-                    self.setNeedsStatusBarAppearanceUpdate()
-                }
-//            }
+            UIView.animate(withDuration: 0.2) {
+                self.setNeedsStatusBarAppearanceUpdate()
+            }
         }
     }
     
@@ -44,18 +42,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if topAnimationFlag == true {
-            return
-        }
-        
         let currentHiddenNaviH: CGFloat = consHiddenNaviBar.constant
         let currentDayTopH: CGFloat = consDayTopMargin.constant
-    
+        
         let offset = scrollView.contentOffset;
-        let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
-            
         
         if(currentDayTopH > 0){
             consHiddenNaviBar.constant = -20
@@ -91,7 +83,6 @@ class ViewController: UIViewController {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
-        print("velocity: \(velocity)", "consDayTopMargin.constant \(consDayTopMargin.constant)")
         if velocity < 0 && consDayTopMargin.constant > -115 {
             closeHeaderView(scrollView: scrollView)
         }
@@ -105,11 +96,10 @@ class ViewController: UIViewController {
             closeHeaderView(scrollView: scrollView)
         }
     }
-
+    
     var topAnimationFlag: Bool = false
     
     func closeHeaderView(scrollView: UIScrollView) {
-        scrollView.setContentOffset(scrollView.contentOffset, animated: false)
         UIView.animate(withDuration: 0.2, animations: {
             self.topAnimationFlag = true
             self.consHiddenNaviBar.constant = 95
@@ -118,20 +108,20 @@ class ViewController: UIViewController {
             self.view.layoutIfNeeded()
         }) { (completion) in
             self.topAnimationFlag = false
-            
         }
     }
     
     func openHeaderView(scrollView: UIScrollView) {
-        scrollView.setContentOffset(scrollView.contentOffset, animated: false)
         UIView.animate(withDuration: 0.2, animations: {
             self.topAnimationFlag = true
             self.consHiddenNaviBar.constant = -20
             self.consDayTopMargin.constant = 0
             self.consImageTopMargin.constant = self.consDayTopMargin.constant / 2
+            self.barStyle = .lightContent
             self.view.layoutIfNeeded()
         }) { (completion) in
             self.topAnimationFlag = false
+            self.barStyle = .lightContent
         }
     }
 }
