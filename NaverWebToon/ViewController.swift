@@ -42,14 +42,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    //    115/
-    var test = 1
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if topAnimationFlag == true {
+            return
+        }
+        
         let currentHiddenNaviH: CGFloat = consHiddenNaviBar.constant
         let currentDayTopH: CGFloat = consDayTopMargin.constant
-
     
         let offset = scrollView.contentOffset;
+        let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
+            
         
         if(currentDayTopH > 0){
             consHiddenNaviBar.constant = -20
@@ -58,15 +62,14 @@ class ViewController: UIViewController {
         }
         else {
             if consHiddenNaviBar.constant < 95 {
-//                if(-currentHiddenNaviH - offset.y > 95) {
-//                    consHiddenNaviBar.constant = 95
-//                    consDayTopMargin.constant = -115
-//                }
-//                else {
+                if(-currentHiddenNaviH - offset.y > 95) {
+                    consHiddenNaviBar.constant = 95
+                    consDayTopMargin.constant = -115
+                }
+                else {
                     consHiddenNaviBar.constant = -currentHiddenNaviH - offset.y
                     consDayTopMargin.constant = currentDayTopH - offset.y
-                    print("dDDDD")
-//                }
+                }
                 scrollView.contentOffset = CGPoint.zero
                 barStyle = .lightContent
                 
@@ -89,35 +92,45 @@ class ViewController: UIViewController {
         if velocity < 0 {
             closeHeaderView(scrollView: scrollView)
         }
-        else {
-            openHeaderView(scrollView: scrollView)
-        }
-        
-//        else if consHiddenNaviBar.constant < 0 && velocity == 0 {
+//        else {
 //            openHeaderView(scrollView: scrollView)
 //        }
-//        else if consHiddenNaviBar.constant >= 0 && velocity == 0 {
-//            closeHeaderView(scrollView: scrollView)
-//        }
+        else if consHiddenNaviBar.constant < 0 && velocity == 0 {
+            openHeaderView(scrollView: scrollView)
+        }
+        else if consHiddenNaviBar.constant >= 0 && velocity == 0 {
+            closeHeaderView(scrollView: scrollView)
+        }
     }
 
+    var topAnimationFlag: Bool = false
+    
     func closeHeaderView(scrollView: UIScrollView) {
-        UIView.animate(withDuration: 0.2) {
+        scrollView.setContentOffset(scrollView.contentOffset, animated: false)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.topAnimationFlag = true
             self.consHiddenNaviBar.constant = 95
             self.consDayTopMargin.constant = -115
             self.consImageTopMargin.constant = self.consDayTopMargin.constant / 2
             self.barStyle = .lightContent
             self.view.layoutIfNeeded()
+        }) { (completion) in
+            self.topAnimationFlag = false
+            
         }
     }
     
     func openHeaderView(scrollView: UIScrollView) {
-        UIView.animate(withDuration: 0.2) {
+        scrollView.setContentOffset(scrollView.contentOffset, animated: false)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.topAnimationFlag = true
             self.consHiddenNaviBar.constant = -20
             self.consDayTopMargin.constant = 0
             self.consImageTopMargin.constant = self.consDayTopMargin.constant / 2
             self.barStyle = .darkContent
             self.view.layoutIfNeeded()
+        }) { (completion) in
+            self.topAnimationFlag = false
         }
     }
 }
